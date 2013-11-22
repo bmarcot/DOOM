@@ -458,7 +458,7 @@ void AM_changeWindowLoc(void)
 void AM_initVariables(void)
 {
     int pnum;
-    static event_t st_notify = { ev_keyup, AM_MSGENTERED };
+    static event_t st_notify = { ev_keyup, AM_MSGENTERED, 0, 0 };
 
     automapactive = true;
     fb = screens[0];
@@ -559,7 +559,7 @@ void AM_LevelInit(void)
 //
 void AM_Stop (void)
 {
-    static event_t st_notify = { 0, ev_keyup, AM_MSGEXITED };
+    static event_t st_notify = { 0, ev_keyup, AM_MSGEXITED, 0 };
 
     AM_unloadPics();
     automapactive = false;
@@ -783,7 +783,7 @@ void AM_doFollowPlayer(void)
 //
 void AM_updateLightLev(void)
 {
-    static nexttic = 0;
+    static int nexttic = 0;
     //static int litelevels[] = { 0, 3, 5, 6, 6, 7, 7, 7 };
     static int litelevels[] = { 0, 4, 7, 10, 12, 14, 15, 15 };
     static int litelevelscnt = 0;
@@ -856,9 +856,9 @@ AM_clipMline
 	TOP	=8
     };
 
-    register	outcode1 = 0;
-    register	outcode2 = 0;
-    register	outside;
+    register	int outcode1 = 0;
+    register	int outcode2 = 0;
+    register	int outside;
 
     fpoint_t	tmp;
     int		dx;
@@ -989,7 +989,7 @@ AM_drawFline
     register int ay;
     register int d;
 
-    static fuck = 0;
+    static int fuck = 0;
 
     // For debugging only
     if (      fl->a.x < 0 || fl->a.x >= f_w
@@ -1284,7 +1284,7 @@ void AM_drawPlayers(void)
 void
 AM_drawThings
 ( int	colors,
-  int 	colorrange)
+  int 	colorrange __attribute__((__unused__)))
 {
     int		i;
     mobj_t*	t;
