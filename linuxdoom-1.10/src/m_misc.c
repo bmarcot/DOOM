@@ -293,7 +293,7 @@ default_t	defaults[] =
     INIT_DEFAULT_ANY("sndserver", (int *) &sndserver_filename, 0xdeadbeef),
 
     //{"mb_used", &mb_used, 2},
-    INIT_DEFAULT_ANY("mb_used", &mb_used, 2),
+    INIT_DEFAULT_ANY("mb_used", &mb_used, 2, 0xdeadbeef),
 #endif /* !SNDSERV */
 
 #endif /* !NORMALUNIX */
