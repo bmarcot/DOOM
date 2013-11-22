@@ -231,39 +231,79 @@ typedef struct
     int		untranslated;		// lousy hack
 } default_t;
 
+#define INIT_DEFAULT_ANY(name, ptr, val)	\
+    { name, ptr, val, 0, 0 }
+
+// #define INIT_DEFAULT_KEY(name, ptr)		\
+//     INIT_DEFAULT(name, ptr, 0)
+
+// #define INIT_DEFAULT_STR(name, ptr)		\
+//     INIT_DEFAULT(name, ptr, 1)
+
+// #define INIT_DEFAULT_INT(name, ptr)		\
+//     INIT_DEFAULT(name, ptr, 2)
+
 default_t	defaults[] =
 {
-    {"mouse_sensitivity",&mouseSensitivity, 5},
-    {"sfx_volume",&snd_SfxVolume, 8},
-    {"music_volume",&snd_MusicVolume, 8},
-    {"show_messages",&showMessages, 1},
+    //{"mouse_sensitivity",&mouseSensitivity, 5},
+    INIT_DEFAULT_ANY("mouse_sensitivity", &mouseSensitivity, 5),
 
+    //{"sfx_volume",&snd_SfxVolume, 8},
+    INIT_DEFAULT_ANY("sfx_volume", &snd_SfxVolume, 8),
+
+    //{"music_volume",&snd_MusicVolume, 8},
+    INIT_DEFAULT_ANY("music_volume",&snd_MusicVolume, 8),
+
+    //{"show_messages",&showMessages, 1},
+    INIT_DEFAULT_ANY("show_messages",&showMessages, 1),
 
 #ifdef NORMALUNIX
-    {"key_right",&key_right, KEY_RIGHTARROW},
-    {"key_left",&key_left, KEY_LEFTARROW},
-    {"key_up",&key_up, KEY_UPARROW},
-    {"key_down",&key_down, KEY_DOWNARROW},
-    {"key_strafeleft",&key_strafeleft, ','},
-    {"key_straferight",&key_straferight, '.'},
+    //{"key_right",&key_right, KEY_RIGHTARROW},
+    INIT_DEFAULT_ANY("key_right",&key_right, KEY_RIGHTARROW),
 
-    {"key_fire",&key_fire, KEY_RCTRL},
-    {"key_use",&key_use, ' '},
-    {"key_strafe",&key_strafe, KEY_RALT},
-    {"key_speed",&key_speed, KEY_RSHIFT},
+    //{"key_left",&key_left, KEY_LEFTARROW},
+    INIT_DEFAULT_ANY("key_left",&key_left, KEY_LEFTARROW),
+
+    //{"key_up",&key_up, KEY_UPARROW},
+    INIT_DEFAULT_ANY("key_up",&key_up, KEY_UPARROW),
+
+    //{"key_down",&key_down, KEY_DOWNARROW},
+    INIT_DEFAULT_ANY("key_down",&key_down, KEY_DOWNARROW),
+
+    //{"key_strafeleft",&key_strafeleft, ','},
+    INIT_DEFAULT_ANY("key_strafeleft",&key_strafeleft, ','),
+
+    //{"key_straferight",&key_straferight, '.'},
+    INIT_DEFAULT_ANY("key_straferight",&key_straferight, '.'),
+
+
+    //{"key_fire",&key_fire, KEY_RCTRL},
+    INIT_DEFAULT_ANY("key_fire",&key_fire, KEY_RCTRL),
+
+    //{"key_use",&key_use, ' '},
+    INIT_DEFAULT_ANY("key_use",&key_use, ' '),
+
+    //{"key_strafe",&key_strafe, KEY_RALT},
+    INIT_DEFAULT_ANY("key_strafe",&key_strafe, KEY_RALT),
+
+    //{"key_speed",&key_speed, KEY_RSHIFT},
+    INIT_DEFAULT_ANY("key_speed",&key_speed, KEY_RSHIFT),
 
 // UNIX hack, to be removed.
 #ifdef SNDSERV
-    {"sndserver", (int *) &sndserver_filename, (int) "sndserver"},
+    //{"sndserver", (int *) &sndserver_filename, (int) "sndserver"},
+    INIT_DEFAULT_ANY("sndserver", (int *) &sndserver_filename, 0xdeadbeef),
+
     {"mb_used", &mb_used, 2},
-#endif
+#endif /* !SNDSERV */
 
-#endif
+#endif /* !NORMALUNIX */
 
-#ifdef LINUX
-    {"mousedev", (int*)&mousedev, (int)"/dev/ttyS0"},
-    {"mousetype", (int*)&mousetype, (int)"microsoft"},
-#endif
+// BM: unused? no reference to these vars
+// #ifdef LINUX
+//     {"mousedev", (int*)&mousedev, (int)"/dev/ttyS0"},
+//     {"mousetype", (int*)&mousetype, (int)"microsoft"},
+// #endif
 
     {"use_mouse",&usemouse, 1},
     {"mouseb_fire",&mousebfire,0},
@@ -285,16 +325,37 @@ default_t	defaults[] =
 
     {"usegamma",&usegamma, 0},
 
-    {"chatmacro0", (int *) &chat_macros[0], (int) HUSTR_CHATMACRO0 },
-    {"chatmacro1", (int *) &chat_macros[1], (int) HUSTR_CHATMACRO1 },
-    {"chatmacro2", (int *) &chat_macros[2], (int) HUSTR_CHATMACRO2 },
-    {"chatmacro3", (int *) &chat_macros[3], (int) HUSTR_CHATMACRO3 },
-    {"chatmacro4", (int *) &chat_macros[4], (int) HUSTR_CHATMACRO4 },
-    {"chatmacro5", (int *) &chat_macros[5], (int) HUSTR_CHATMACRO5 },
-    {"chatmacro6", (int *) &chat_macros[6], (int) HUSTR_CHATMACRO6 },
-    {"chatmacro7", (int *) &chat_macros[7], (int) HUSTR_CHATMACRO7 },
-    {"chatmacro8", (int *) &chat_macros[8], (int) HUSTR_CHATMACRO8 },
-    {"chatmacro9", (int *) &chat_macros[9], (int) HUSTR_CHATMACRO9 }
+    /* FIXME-BM: what are these chat macro? how to save them? move this in an init proc? */
+
+    //{"chatmacro0", (int *) &chat_macros[0], (int) HUSTR_CHATMACRO0 },
+    INIT_DEFAULT_ANY("chatmacro0", (int *) &chat_macros[0], 0xdeadbeef),
+
+    //{"chatmacro1", (int *) &chat_macros[1], (int) HUSTR_CHATMACRO1 },
+    INIT_DEFAULT_ANY("chatmacro1", (int *) &chat_macros[1], 0xdeadbeef),
+
+    //{"chatmacro2", (int *) &chat_macros[2], (int) HUSTR_CHATMACRO2 },
+    INIT_DEFAULT_ANY("chatmacro2", (int *) &chat_macros[2], 0xdeadbeef),
+
+    //{"chatmacro3", (int *) &chat_macros[3], (int) HUSTR_CHATMACRO3 },
+    INIT_DEFAULT_ANY("chatmacro3", (int *) &chat_macros[3], 0xdeadbeef),
+
+    //{"chatmacro4", (int *) &chat_macros[4], (int) HUSTR_CHATMACRO4 },
+    INIT_DEFAULT_ANY("chatmacro4", (int *) &chat_macros[4], 0xdeadbeef),
+
+    //{"chatmacro5", (int *) &chat_macros[5], (int) HUSTR_CHATMACRO5 },
+    INIT_DEFAULT_ANY("chatmacro5", (int *) &chat_macros[5], 0xdeadbeef),
+
+    //{"chatmacro6", (int *) &chat_macros[6], (int) HUSTR_CHATMACRO6 },
+    INIT_DEFAULT_ANY("chatmacro6", (int *) &chat_macros[6], 0xdeadbeef),
+
+    //{"chatmacro7", (int *) &chat_macros[7], (int) HUSTR_CHATMACRO7 },
+    INIT_DEFAULT_ANY("chatmacro7", (int *) &chat_macros[7], 0xdeadbeef),
+
+    //{"chatmacro8", (int *) &chat_macros[8], (int) HUSTR_CHATMACRO8 },
+    INIT_DEFAULT_ANY("chatmacro8", (int *) &chat_macros[8], 0xdeadbeef),
+
+    //{"chatmacro9", (int *) &chat_macros[9], (int) HUSTR_CHATMACRO9}
+    INIT_DEFAULT_ANY("chatmacro9", (int *) &chat_macros[9], 0xdeadbeef)
 
 };
 
@@ -530,5 +591,3 @@ void M_ScreenShot (void)
 
     players[consoleplayer].message = "screen shot";
 }
-
-
