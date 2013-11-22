@@ -6,14 +6,17 @@
 #
 
 EXE=	doom
-CC=  	gcc
+#CC=  	gcc
+#CC= 	arm-none-uclinux-uclibceabi-gcc
 
-CFLAGS=-W -Wall -I$(INCDIR) -DNORMALUNIX -DLINUX
+CFLAGS=	-W -Wall -Wextra -std=gnu99 -I$(INCDIR) -DNORMALUNIX -DLINUX
 #CFLAGS=-g -Wall -DNORMALUNIX -DLINUX # -DUSEASM
 
 # FIXME-BM: replace X11 with an (H)AL
+#           pipe all Xxxx functions to an abstraction layer
 LDFLAGS=-L/usr/X11R6/lib
-LIBS=	-lXext -lX11 -lnsl -lm
+#LIBS=	-lXext -lX11 -lnsl -lm
+LIBS=	-lm
 
 OBJDIR=	obj
 SRCDIR=	src
@@ -26,7 +29,7 @@ TEST_OBJDIR=$(shell test -d $(OBJDIR) || mkdir $(OBJDIR))
 all: $(EXE)
 
 $(EXE): $(TEST_OBJDIR) $(OBJ)
-	$(CC) -o $@ $^
+	$(CC) $(LIBS) -o $@ $^
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) -o $@ -c $< $(CFLAGS)
