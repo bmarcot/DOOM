@@ -351,14 +351,14 @@ enum
 
 menuitem_t OptionsMenu[]=
 {
-    {1,"M_ENDGAM",	M_EndGame,'e'},
-    {1,"M_MESSG",	M_ChangeMessages,'m'},
-    {1,"M_DETAIL",	M_ChangeDetail,'g'},
-    {2,"M_SCRNSZ",	M_SizeDisplay,'s'},
-    {-1,"",0},
-    {2,"M_MSENS",	M_ChangeSensitivity,'m'},
-    {-1,"",0},
-    {1,"M_SVOL",	M_Sound,'s'}
+    { 1,"M_ENDGAM", M_EndGame,'e'},
+    { 1,"M_MESSG", M_ChangeMessages,'m'},
+    { 1,"M_DETAIL", M_ChangeDetail,'g'},
+    { 2,"M_SCRNSZ", M_SizeDisplay,'s'},
+    { -1, "", NULL, 0 },
+    { 2, "M_MSENS", M_ChangeSensitivity,'m' },
+    { -1, "", NULL, 0 },
+    { 1,"M_SVOL", M_Sound,'s'}
 };
 
 menu_t  OptionsDef =
@@ -430,10 +430,10 @@ enum
 
 menuitem_t SoundMenu[]=
 {
-    {2,"M_SFXVOL",M_SfxVol,'s'},
-    {-1,"",0},
-    {2,"M_MUSVOL",M_MusicVol,'m'},
-    {-1,"",0}
+    { 2, "M_SFXVOL", M_SfxVol, 's'},
+    { -1, "", NULL, 0},
+    { 2, "M_MUSVOL", M_MusicVol,'m'},
+    { -1, "", NULL, 0 }
 };
 
 menu_t  SoundDef =
@@ -591,7 +591,7 @@ void M_LoadSelect(int choice)
 //
 // Selected from DOOM menu
 //
-void M_LoadGame (int choice)
+void M_LoadGame (int choice __attribute__((__unused__)))
 {
     if (netgame)
     {
@@ -656,7 +656,7 @@ void M_SaveSelect(int choice)
 //
 // Selected from DOOM menu
 //
-void M_SaveGame (int choice)
+void M_SaveGame (int choice __attribute__((__unused__)))
 {
     if (!usergame)
     {
@@ -808,7 +808,7 @@ void M_DrawSound(void)
 		 16,snd_MusicVolume);
 }
 
-void M_Sound(int choice)
+void M_Sound(int choice __attribute__((__unused__)))
 {
     M_SetupNextMenu(&SoundDef);
 }
@@ -870,7 +870,7 @@ void M_DrawNewGame(void)
     V_DrawPatchDirect (54,38,0,W_CacheLumpName("M_SKILL",PU_CACHE));
 }
 
-void M_NewGame(int choice)
+void M_NewGame(int choice __attribute__((__unused__)))
 {
     if (netgame && !demoplayback)
     {
@@ -965,7 +965,7 @@ void M_DrawOptions(void)
 		 9,screenSize);
 }
 
-void M_Options(int choice)
+void M_Options(int choice __attribute__((__unused__)))
 {
     M_SetupNextMenu(&OptionsDef);
 }
@@ -1095,7 +1095,7 @@ void M_QuitResponse(int ch)
 
 
 
-void M_QuitDOOM(int choice)
+void M_QuitDOOM(int choice __attribute__((__unused__)))
 {
   // We pick index 0 which is language sensitive,
   //  or one at random, between 1 and maximum number.
@@ -1890,4 +1890,3 @@ void M_Init (void)
     }
 
 }
-

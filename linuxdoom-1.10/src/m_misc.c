@@ -236,10 +236,8 @@ typedef struct
 
 // #define INIT_DEFAULT_KEY(name, ptr)		\
 //     INIT_DEFAULT(name, ptr, 0)
-
 // #define INIT_DEFAULT_STR(name, ptr)		\
 //     INIT_DEFAULT(name, ptr, 1)
-
 // #define INIT_DEFAULT_INT(name, ptr)		\
 //     INIT_DEFAULT(name, ptr, 2)
 
@@ -294,7 +292,8 @@ default_t	defaults[] =
     //{"sndserver", (int *) &sndserver_filename, (int) "sndserver"},
     INIT_DEFAULT_ANY("sndserver", (int *) &sndserver_filename, 0xdeadbeef),
 
-    {"mb_used", &mb_used, 2},
+    //{"mb_used", &mb_used, 2},
+    INIT_DEFAULT_ANY("mb_used", &mb_used, 2),
 #endif /* !SNDSERV */
 
 #endif /* !NORMALUNIX */
