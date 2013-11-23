@@ -6,10 +6,10 @@
 #
 
 EXE=	doom
-#CC=  	gcc
+CC=  	gcc
 #CC= 	arm-none-uclinux-uclibceabi-gcc
 
-CFLAGS=	-W -Wall -Wextra -std=gnu99 -I$(INCDIR) -DNORMALUNIX -DLINUX
+CFLAGS=	-W -Wall -Wextra -std=gnu99 -I$(INCDIR) -DNORMALUNIX -DLINUX -Imisc/X11
 #CFLAGS=-g -Wall -DNORMALUNIX -DLINUX # -DUSEASM
 
 # FIXME-BM: replace X11 with an (H)AL
@@ -26,10 +26,13 @@ OBJ=	$(subst $(SRCDIR),$(OBJDIR),$(SRC:.c=.o))
 
 TEST_OBJDIR=$(shell test -d $(OBJDIR) || mkdir $(OBJDIR))
 
-all: $(EXE)
+all: $(OBJDIR) $(EXE)
 
-$(EXE): $(TEST_OBJDIR) $(OBJ)
-	$(CC) $(LIBS) -o $@ $^
+$(EXE): $(OBJ)
+	$(CC) -o $@ $^ $(LIBS)
+
+$(OBJDIR):
+	$(shell test -d $(OBJDIR) || mkdir $(OBJDIR))
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) -o $@ -c $< $(CFLAGS)
