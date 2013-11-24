@@ -353,6 +353,8 @@ extern  boolean         demorecording;
 
 void D_DoomLoop (void)
 {
+  printf("D_DoomLoop\n");
+
     if (demorecording)
 	G_BeginRecording ();
 
