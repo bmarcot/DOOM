@@ -1,4 +1,3 @@
-################################################################
 #
 # $Id:$
 #
@@ -9,7 +8,7 @@ EXE=	doom
 CC=  	gcc
 #CC= 	arm-none-uclinux-uclibceabi-gcc
 
-CFLAGS=	-W -Wall -Wextra -std=gnu99 -I$(INCDIR) -DNORMALUNIX -DLINUX -Imisc/X11
+CFLAGS=	-W -Wall -Wextra -std=gnu99 -I$(INCDIR) -DNORMALUNIX -DLINUX -Imisc/X11 -g
 #CFLAGS=-g -Wall -DNORMALUNIX -DLINUX # -DUSEASM
 
 # FIXME-BM: replace X11 with an (H)AL
