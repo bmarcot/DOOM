@@ -106,7 +106,8 @@ int  I_GetTime (void)
 //
 void I_Init (void)
 {
-    I_InitSound();
+  //FIXME-BM:  does not support sound atm
+  //I_InitSound();
     //  I_InitGraphics();
 }
 

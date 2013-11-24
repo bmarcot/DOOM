@@ -710,6 +710,8 @@ void I_InitGraphics(void)
     int			valuemask;
     static int		firsttime=1;
 
+    printf("I_InitGraphics\n");
+
     if (!firsttime)
 	return;
     firsttime = 0;
