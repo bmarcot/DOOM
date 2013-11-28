@@ -34,7 +34,6 @@ rcsid[] = "$Id: w_wad.c,v 1.5 1997/02/03 16:47:57 b1 Exp $";
 #include <malloc.h>
 #include <fcntl.h>
 #include <sys/stat.h>
-#include <alloca.h>
 #define O_BINARY		0
 #endif
 
@@ -47,11 +46,6 @@ rcsid[] = "$Id: w_wad.c,v 1.5 1997/02/03 16:47:57 b1 Exp $";
 #pragma implementation "w_wad.h"
 #endif
 #include "w_wad.h"
-
-
-
-
-
 
 //
 // GLOBALS
@@ -147,6 +141,7 @@ void W_AddFile (char *filename)
     int			length;
     int			startlump;
     filelump_t*		fileinfo;
+    filelump_t*		fileinfo_cpy = NULL;
     filelump_t		singleinfo;
     int			storehandle;
 
@@ -196,12 +191,11 @@ void W_AddFile (char *filename)
 	header.numlumps = LONG(header.numlumps);
 	header.infotableofs = LONG(header.infotableofs);
 	length = header.numlumps*sizeof(filelump_t);
-	fileinfo = alloca (length);
+	fileinfo_cpy = fileinfo = Z_Malloc (length, PU_STATIC, NULL);
 	lseek (handle, header.infotableofs, SEEK_SET);
 	read (handle, fileinfo, length);
 	numlumps += header.numlumps;
     }
-
 
     // Fill in lumpinfo
     lumpinfo = realloc (lumpinfo, numlumps*sizeof(lumpinfo_t));
@@ -220,6 +214,9 @@ void W_AddFile (char *filename)
 	lump_p->size = LONG(fileinfo->size);
 	strncpy (lump_p->name, fileinfo->name, 8);
     }
+
+    if (fileinfo_cpy)
+	Z_Free (fileinfo_cpy);
 
     if (reloadname)
 	close (handle);
@@ -242,6 +239,7 @@ void W_Reload (void)
     int			handle;
     int			length;
     filelump_t*		fileinfo;
+    filelump_t*		fileinfo_cpy;
 
     if (!reloadname)
 	return;
@@ -253,7 +251,7 @@ void W_Reload (void)
     lumpcount = LONG(header.numlumps);
     header.infotableofs = LONG(header.infotableofs);
     length = lumpcount*sizeof(filelump_t);
-    fileinfo = alloca (length);
+    fileinfo_cpy = fileinfo = Z_Malloc (length, PU_STATIC, NULL);
     lseek (handle, header.infotableofs, SEEK_SET);
     read (handle, fileinfo, length);
 
@@ -270,6 +268,8 @@ void W_Reload (void)
 	lump_p->position = LONG(fileinfo->filepos);
 	lump_p->size = LONG(fileinfo->size);
     }
+
+    Z_Free (fileinfo_cpy);
 
     close (handle);
 }
@@ -573,5 +573,3 @@ void W_Profile (void)
     }
     fclose (f);
 }
-
-
