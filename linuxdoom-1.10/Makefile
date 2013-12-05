@@ -8,7 +8,9 @@ EXE=	doom
 CC=  	gcc
 #CC= 	arm-none-uclinux-uclibceabi-gcc
 
-CFLAGS=	-W -Wall -Wextra -std=gnu99 -I$(INCDIR) -DNORMALUNIX -DLINUX -Imisc/X11 -g
+CFLAGS=	-W -Wall -Wextra -std=gnu99 -I$(INCDIR) -DNORMALUNIX -DLINUX -Imisc/X11 -g -m32
+#CFLAGS=	-W -Wall -Wextra -std=gnu99 -I$(INCDIR) -DNORMALUNIX -DLINUX -Imisc/X11 -march=armv7-m -mthumb
+
 #CFLAGS=-g -Wall -DNORMALUNIX -DLINUX # -DUSEASM
 
 # FIXME-BM: replace X11 with an (H)AL
@@ -28,7 +30,8 @@ TEST_OBJDIR=$(shell test -d $(OBJDIR) || mkdir $(OBJDIR))
 all: $(OBJDIR) $(EXE)
 
 $(EXE): $(OBJ)
-	$(CC) -o $@ $^ $(LIBS)
+#	$(CC) -o $@ $^ $(LIBS) -march=armv7-m -mthumb
+	$(CC) -o $@ $^ $(LIBS) -m32
 
 $(OBJDIR):
 	$(shell test -d $(OBJDIR) || mkdir $(OBJDIR))
