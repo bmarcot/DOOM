@@ -4,6 +4,7 @@
 // $Id:$
 //
 // Copyright (C) 1993-1996 by id Software, Inc.
+// Copyright (C) 2013-2014 by Benoit Marcot
 //
 // This source is available for distribution and/or modification
 // only under the terms of the DOOM Source Code License as
@@ -74,8 +75,9 @@ static const char rcsid[] = "$Id: d_main.c,v 1.8 1997/02/03 22:45:09 b1 Exp $";
 #include "p_setup.h"
 #include "r_local.h"
 
-
 #include "d_main.h"
+
+#include "b_palette.h"
 
 //
 // D-DoomLoop()
@@ -100,7 +102,6 @@ boolean         fastparm;	// checkparm of -fast
 boolean         drone;
 
 boolean		singletics = false; // debug flag to cancel adaptiveness
-
 
 
 //extern int soundVolume;
@@ -206,6 +207,9 @@ void D_Display (void)
     boolean			wipe;
     boolean			redrawsbar;
 
+    print_fb_fast(screens[0]);
+    //print_fb(screens[0]);
+
     if (nodrawers)
 	return;                    // for comparative timing / profiling
 
@@ -225,7 +229,7 @@ void D_Display (void)
 	wipe = true;
 	wipe_StartScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
     }
-    else
+   else
 	wipe = false;
 
     if (gamestate == GS_LEVEL && gametic)
@@ -319,6 +323,7 @@ void D_Display (void)
     // normal update
     if (!wipe)
     {
+	//printf("no wipe %d\n", *( unsigned char *)screens[0]);
 	I_FinishUpdate ();              // page flip or blit buffer
 	return;
     }
@@ -353,7 +358,7 @@ extern  boolean         demorecording;
 
 void D_DoomLoop (void)
 {
-  printf("D_DoomLoop\n");
+    printf("D_DoomLoop\n");
 
     if (demorecording)
 	G_BeginRecording ();
@@ -379,6 +384,8 @@ void D_DoomLoop (void)
 	    I_StartTic ();
 	    D_ProcessEvents ();
 	    G_BuildTiccmd (&netcmds[consoleplayer][maketic%BACKUPTICS]);
+	    // advancedemo = 1;
+	    // printf("TOTO\n");
 	    if (advancedemo)
 		D_DoAdvanceDemo ();
 	    M_Ticker ();
@@ -398,12 +405,12 @@ void D_DoomLoop (void)
 
 #ifndef SNDSERV
 	// Sound mixing for the buffer is snychronous.
-	I_UpdateSound();
+	//I_UpdateSound();
 #endif
 	// Synchronous sound output is explicitly called.
 #ifndef SNDINTR
 	// Update sound output.
-	I_SubmitSound();
+	//I_SubmitSound();
 #endif
     }
 }
@@ -455,6 +462,7 @@ void D_AdvanceDemo (void)
 //
  void D_DoAdvanceDemo (void)
 {
+
     players[consoleplayer].playerstate = PST_LIVE;  // not reborn
     advancedemo = false;
     usergame = false;               // no save / end game here
@@ -1170,4 +1178,252 @@ void D_DoomMain (void)
     }
 
     D_DoomLoop ();  // never returns
+}
+
+
+// --------------------
+
+void print_black(void)
+{
+    printf("\033[30m#\033[39m");
+}
+
+void print_red(void)
+{
+    printf("\033[31m#\033[39m");
+}
+
+void print_green(void)
+{
+    printf("\033[32m#\033[39m");
+}
+
+void print_yellow(void)
+{
+    printf("\033[33m#\033[39m");
+}
+
+void print_blue(void)
+{
+    printf("\033[34m#\033[39m");
+}
+
+void print_magenta(void)
+{
+    printf("\033[35m#\033[39m");
+}
+
+void print_cyan(void)
+{
+    printf("\033[36m#\033[39m");
+}
+
+void print_white(void)
+{
+    printf("\033[37m#\033[39m");
+}
+
+enum palette_id {
+    BLACK = 0,
+    RED,
+    GREEN,
+    BROWN,
+    BLUE,
+    MAGENTA,
+    CYAN,
+    GREY,
+    LIGHT_RED,
+    LIGHT_GREEN,
+    YELLOW,
+    LIGHT_BLUE,
+    LIGHT_PURPLE,
+    LIGHT_CYAN,
+    WHITE
+};
+
+int get_palette_id(unsigned int p256)
+{
+    switch (p256) {
+    case 0:
+	return BLACK;
+    case 1 ... 2:
+	return BROWN;
+    case 3:
+	return GREY;
+    case 4:
+	return WHITE;
+    case 5 ... 8:
+	return BLACK;
+    case 9 ... 12:
+	return GREEN;
+    case 13 ... 15:
+	return BROWN;
+    case 16 ... 31:
+	return LIGHT_RED;
+    case 32 ... 47:
+	return RED;
+    case 48 ... 63:
+	return YELLOW;
+    case 64 ... 79:
+	return BROWN;
+    case 80 ... 95:
+	return WHITE;
+    case 96 ... 111:
+	return GREY;
+    case 112 ... 121:
+	return LIGHT_GREEN;
+    case 122 ... 127:
+	return GREEN;
+    case 128 ... 135:
+	return GREY;
+    case 136 ... 151:
+	return BROWN;
+    case 152 ... 159:
+	return GREEN;
+    case 160 ... 167:
+	return YELLOW;
+    case 168 ... 170:
+	return WHITE;
+    case 171 ... 176:
+	return LIGHT_RED;
+    case 177 ... 191:
+	return RED;
+    case 192 ... 202:
+	return LIGHT_BLUE;
+    case 203 ... 207:
+	return BLUE;
+    case 208 ... 223:
+	return BROWN;
+    case 224 ... 231:
+	return YELLOW;
+    case 232 ... 235:
+	return BROWN;
+    case 236 ... 239:
+	return GREY;
+    case 240 ... 247:
+	return BLUE;
+    case 248 ... 249:
+	return YELLOW;
+    case 250 ... 255:
+	return MAGENTA;
+    default:
+	return BLACK;
+    }
+}
+
+
+void convert_palette_256_to_8(unsigned int p256)
+{
+    switch (p256) {
+    case 0 ... 8:
+	print_black();
+	break;
+    case 9 ... 15:
+	print_green();
+	break;
+    case 16 ... 47:
+	print_red();
+	break;
+    case 48 ... 79:
+	print_yellow();
+	break;
+    case 80 ... 95:
+	print_white();
+	break;
+    case 96 ... 111:
+	print_black();
+	break;
+    case 112 ... 127:
+	print_green();
+	break;
+    case 128 ... 151:
+	print_white();
+	break;
+    case 152 ... 159:
+	print_green();
+	break;
+    case 160 ... 167:
+	print_yellow();
+	break;
+    case 168 ... 191:
+	print_red();
+	break;
+    case 192 ... 202:
+	print_cyan();
+	break;
+    case 203 ... 207:
+	print_blue();
+	break;
+    case 208 ... 235:
+	print_yellow();
+	break;
+    case 236 ... 239:
+	print_green();
+	break;
+    case 240 ... 247:
+	print_blue();
+	break;
+    case 248 ... 249:
+	print_yellow();
+	break;
+    case 250 ... 255:
+	print_magenta();
+	break;
+    default:
+	print_black();
+    }
+}
+
+void print_fb(unsigned char *const buf)
+{
+    void (*f[])(void) = { print_black,
+			  print_red,
+			  print_green,
+			  print_yellow,
+			  print_blue,
+			  print_magenta,
+			  print_cyan,
+			  print_white };
+
+    printf("\033[H");
+    for (int j = 55; j < SCREENHEIGHT; j++) {
+	for (int i = 0; i < SCREENWIDTH; i++)
+	    // f[(*(unsigned char *)(buf + i + j * SCREENWIDTH)) / 32]();
+	    convert_palette_256_to_8(*(unsigned char *)(buf + i + j * SCREENWIDTH));
+	printf("\n");
+    }
+}
+
+
+// OK ----
+
+static char cbuf[320 * 200 * 11];
+static char iobuf[320 * 200 * 11];
+
+void print_fb_fast(unsigned char *const buf)
+{
+    unsigned int k = 0;
+    char newline[] = "\n";
+
+    // if(setvbuf(stdout, iobuf, _IOFBF, sizeof(iobuf)))
+    // 	return -1;
+    setvbuf(stdout, NULL, _IOFBF, 0); //turn off buffering
+
+    //  printf("\033[H");
+//    fflush(stdout);
+    // for (int j = 0; j < SCREENHEIGHT; j++) {
+    for (int j = 55; j < SCREENHEIGHT; j++) {
+	for (int i = 0; i < SCREENWIDTH; i++) {
+	    cbuf[k++] = palette[get_palette_id(*(unsigned char *)(buf + i + j * SCREENWIDTH))];
+	    //strcpy(&cbuf[k++], palette[get_palette_id(*(unsigned char *)(buf + i + j * SCREENWIDTH))]);
+	     // k += strlen(palette[0]);
+	     //k++;
+	}
+	cbuf[k++] = '\n';
+	//strcpy(&cbuf[k], newline);
+	//k++;
+    }
+    //cbuf[k] = '\0';
+    printf("\033[H%s", cbuf);
+    fflush(stdout);
 }
