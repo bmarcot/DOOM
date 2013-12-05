@@ -29,8 +29,8 @@
 //
 // Global parameters/defines.
 //
-// DOOM version
-enum { VERSION =  110 };
+// DOOM version (changed to 109 to match doom1.wad)
+enum { VERSION =  109 };
 
 
 // Game mode handling - identify IWAD version
