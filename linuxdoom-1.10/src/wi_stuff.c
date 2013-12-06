@@ -223,41 +223,46 @@ static point_t lnodes[NUMEPISODES][NUMMAPS] =
 // Using patches saves a lot of space,
 //  as they replace 320x200 full screen frames.
 //
+
+#define INIT_ANIM_ENTRY(type, period, nanims, loc_x, loc_y, data1)      \
+    { (type), (period), (nanims), { (loc_x), (loc_y) }, (data1),	\
+      0, { NULL, NULL, NULL }, 0, 0, 0, 0 }
+
 static anim_t epsd0animinfo[] =
 {
-    { ANIM_ALWAYS, TICRATE/3, 3, { 224, 104 } },
-    { ANIM_ALWAYS, TICRATE/3, 3, { 184, 160 } },
-    { ANIM_ALWAYS, TICRATE/3, 3, { 112, 136 } },
-    { ANIM_ALWAYS, TICRATE/3, 3, { 72, 112 } },
-    { ANIM_ALWAYS, TICRATE/3, 3, { 88, 96 } },
-    { ANIM_ALWAYS, TICRATE/3, 3, { 64, 48 } },
-    { ANIM_ALWAYS, TICRATE/3, 3, { 192, 40 } },
-    { ANIM_ALWAYS, TICRATE/3, 3, { 136, 16 } },
-    { ANIM_ALWAYS, TICRATE/3, 3, { 80, 16 } },
-    { ANIM_ALWAYS, TICRATE/3, 3, { 64, 24 } }
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 224, 104, 0),
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 184, 160, 0),
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 112, 136, 0),
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 72,  112, 0),
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 88,  96,  0),
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 64,  48,  0),
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 192, 40,  0),
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 136, 16,  0),
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 80,  16,  0),
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 64,  24,  0)
 };
 
 static anim_t epsd1animinfo[] =
 {
-    { ANIM_LEVEL, TICRATE/3, 1, { 128, 136 }, 1 },
-    { ANIM_LEVEL, TICRATE/3, 1, { 128, 136 }, 2 },
-    { ANIM_LEVEL, TICRATE/3, 1, { 128, 136 }, 3 },
-    { ANIM_LEVEL, TICRATE/3, 1, { 128, 136 }, 4 },
-    { ANIM_LEVEL, TICRATE/3, 1, { 128, 136 }, 5 },
-    { ANIM_LEVEL, TICRATE/3, 1, { 128, 136 }, 6 },
-    { ANIM_LEVEL, TICRATE/3, 1, { 128, 136 }, 7 },
-    { ANIM_LEVEL, TICRATE/3, 3, { 192, 144 }, 8 },
-    { ANIM_LEVEL, TICRATE/3, 1, { 128, 136 }, 8 }
+    INIT_ANIM_ENTRY(ANIM_LEVEL, TICRATE/3, 1, 128, 136, 1),
+    INIT_ANIM_ENTRY(ANIM_LEVEL, TICRATE/3, 1, 128, 136, 2),
+    INIT_ANIM_ENTRY(ANIM_LEVEL, TICRATE/3, 1, 128, 136, 3),
+    INIT_ANIM_ENTRY(ANIM_LEVEL, TICRATE/3, 1, 128, 136, 4),
+    INIT_ANIM_ENTRY(ANIM_LEVEL, TICRATE/3, 1, 128, 136, 5),
+    INIT_ANIM_ENTRY(ANIM_LEVEL, TICRATE/3, 1, 128, 136, 6),
+    INIT_ANIM_ENTRY(ANIM_LEVEL, TICRATE/3, 1, 128, 136, 7),
+    INIT_ANIM_ENTRY(ANIM_LEVEL, TICRATE/3, 3, 192, 144, 8),
+    INIT_ANIM_ENTRY(ANIM_LEVEL, TICRATE/3, 1, 128, 136, 8)
 };
 
 static anim_t epsd2animinfo[] =
 {
-    { ANIM_ALWAYS, TICRATE/3, 3, { 104, 168 } },
-    { ANIM_ALWAYS, TICRATE/3, 3, { 40, 136 } },
-    { ANIM_ALWAYS, TICRATE/3, 3, { 160, 96 } },
-    { ANIM_ALWAYS, TICRATE/3, 3, { 104, 80 } },
-    { ANIM_ALWAYS, TICRATE/3, 3, { 120, 32 } },
-    { ANIM_ALWAYS, TICRATE/4, 3, { 40, 0 } }
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 104, 168, 0),
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 40,  136, 0),
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 160, 96,  0),
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 104, 80,  0),
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/3, 3, 120, 32,  0),
+    INIT_ANIM_ENTRY(ANIM_ALWAYS, TICRATE/4, 3, 40,  0,   0)
 };
 
 static int NUMANIMS[NUMEPISODES] =
