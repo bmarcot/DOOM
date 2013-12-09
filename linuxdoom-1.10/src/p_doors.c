@@ -39,6 +39,8 @@ rcsid[] = "$Id: p_doors.c,v 1.4 1997/02/03 16:47:53 b1 Exp $";
 #include "dstrings.h"
 #include "sounds.h"
 
+#include "b_stuff.h"
+
 #if 0
 //
 // Sliding door frame information
@@ -527,7 +529,7 @@ void P_SpawnDoorCloseIn30 (sector_t* sec)
 void
 P_SpawnDoorRaiseIn5Mins
 ( sector_t*	sec,
-  int		secnum )
+  int		UNUSED(secnum) )
 {
     vldoor_t*	door;
 

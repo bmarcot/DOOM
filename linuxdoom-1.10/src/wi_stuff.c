@@ -50,6 +50,8 @@ rcsid[] = "$Id: wi_stuff.c,v 1.7 1997/02/03 22:45:13 b1 Exp $";
 
 #include "wi_stuff.h"
 
+#include "b_stuff.h"
+
 //
 // Data needed to add patches to full screen intermission pics.
 // Patches are statistics messages, and animations.
@@ -416,7 +418,7 @@ void WI_slamBackground(void)
 
 // The ticker is used to detect keys
 //  because of timing issues in netgames.
-boolean WI_Responder(event_t* ev)
+boolean WI_Responder(event_t* UNUSED(ev))
 {
     return false;
 }

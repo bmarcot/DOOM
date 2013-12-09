@@ -41,6 +41,7 @@ rcsid[] = "$Id: r_things.c,v 1.5 1997/02/03 16:47:56 b1 Exp $";
 
 #include "doomstat.h"
 
+#include "b_stuff.h"
 
 
 #define MINZ				(FRACUNIT*4)
@@ -396,8 +397,8 @@ void R_DrawMaskedColumn (column_t* column)
 void
 R_DrawVisSprite
 ( vissprite_t*		vis,
-  int			x1,
-  int			x2 )
+  int			UNUSED(x1),
+  int			UNUSED(x2) )
 {
     column_t*		column;
     int			texturecolumn;
@@ -984,6 +985,3 @@ void R_DrawMasked (void)
     if (!viewangleoffset)
 	R_DrawPlayerSprites ();
 }
-
-
-

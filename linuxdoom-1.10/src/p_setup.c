@@ -45,6 +45,8 @@ rcsid[] = "$Id: p_setup.c,v 1.5 1997/02/03 22:45:12 b1 Exp $";
 
 #include "doomstat.h"
 
+#include "b_stuff.h"
+
 
 void	P_SpawnMapThing (mapthing_t*	mthing);
 
@@ -584,8 +586,8 @@ void
 P_SetupLevel
 ( int		episode,
   int		map,
-  int		playermask,
-  skill_t	skill)
+  int		UNUSED(playermask),
+  skill_t	UNUSED(skill) )
 {
     int		i;
     char	lumpname[9];
@@ -703,6 +705,3 @@ void P_Init (void)
     P_InitPicAnims ();
     R_InitSprites (sprnames);
 }
-
-
-

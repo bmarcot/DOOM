@@ -42,6 +42,7 @@ rcsid[] = "$Id: st_lib.c,v 1.4 1997/02/03 16:47:56 b1 Exp $";
 #include "st_lib.h"
 #include "r_local.h"
 
+#include "b_stuff.h"
 
 // in AM_map.c
 extern boolean		automapactive;
@@ -90,7 +91,7 @@ STlib_initNum
 void
 STlib_drawNum
 ( st_number_t*	n,
-  boolean	refresh )
+  boolean	UNUSED(refresh) )
 {
 
     int		numdigits = n->width;
@@ -290,4 +291,3 @@ STlib_updateBinIcon
     }
 
 }
-
