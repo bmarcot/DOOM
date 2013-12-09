@@ -191,10 +191,10 @@ int             mousex;
 int		mousey;
 
 int             dclicktime;
-int		dclickstate;
+static boolean	dclickstate;
 int		dclicks;
 int             dclicktime2;
-int		dclickstate2;
+static boolean	dclickstate2;
 int		dclicks2;
 
 // joystick values are repeated
@@ -218,7 +218,7 @@ void*		statcopy;				// for statistics driver
 
 int G_CmdChecksum (ticcmd_t* cmd)
 {
-    int		i;
+    size_t	i;
     int		sum = 0;
 
     for (i=0 ; i< sizeof(*cmd)/4 - 1 ; i++)
@@ -352,7 +352,7 @@ void G_BuildTiccmd (ticcmd_t* cmd)
 	forward += forwardmove[speed];
 
     // forward double click
-    if (mousebuttons[mousebforward] != dclickstate && dclicktime > 1 )
+    if ((mousebuttons[mousebforward] != dclickstate) && (dclicktime > 1))
     {
 	dclickstate = mousebuttons[mousebforward];
 	if (dclickstate)
@@ -379,7 +379,7 @@ void G_BuildTiccmd (ticcmd_t* cmd)
     bstrafe =
 	mousebuttons[mousebstrafe]
 	|| joybuttons[joybstrafe];
-    if (bstrafe != dclickstate2 && dclicktime2 > 1 )
+    if ((bstrafe != dclickstate2) && (dclicktime2 > 1))
     {
 	dclickstate2 = bstrafe;
 	if (dclickstate2)
@@ -1685,6 +1685,3 @@ boolean G_CheckDemoStatus (void)
 
     return false;
 }
-
-
-
