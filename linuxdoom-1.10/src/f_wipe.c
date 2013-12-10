@@ -35,6 +35,8 @@ static const char rcsid[] = "$Id: f_wipe.c,v 1.2 1997/02/03 22:45:09 b1 Exp $";
 
 #include "f_wipe.h"
 
+#include "b_stuff.h"
+
 //
 //                       SCREEN WIPE PACKAGE
 //
@@ -73,7 +75,7 @@ int
 wipe_initColorXForm
 ( int	width,
   int	height,
-  int	ticks )
+  int	UNUSED(ticks) )
 {
     memcpy(wipe_scr, wipe_scr_start, width*height);
     return 0;
@@ -127,9 +129,9 @@ wipe_doColorXForm
 
 int
 wipe_exitColorXForm
-( int	width,
-  int	height,
-  int	ticks )
+( int	UNUSED(width),
+  int	UNUSED(height),
+  int	UNUSED(ticks) )
 {
     return 0;
 }
@@ -141,7 +143,7 @@ int
 wipe_initMelt
 ( int	width,
   int	height,
-  int	ticks )
+  int	UNUSED(ticks) )
 {
     int i, r;
 
@@ -225,9 +227,9 @@ wipe_doMelt
 
 int
 wipe_exitMelt
-( int	width,
-  int	height,
-  int	ticks )
+( int	UNUSED(width),
+  int	UNUSED(height),
+  int	UNUSED(ticks) )
 {
     Z_Free(y);
     return 0;
@@ -235,10 +237,10 @@ wipe_exitMelt
 
 int
 wipe_StartScreen
-( int	x,
-  int	y,
-  int	width,
-  int	height )
+( int	UNUSED(x),
+  int	UNUSED(y),
+  int	UNUSED(width),
+  int	UNUSED(height) )
 {
     wipe_scr_start = screens[2];
     I_ReadScreen(wipe_scr_start);
@@ -261,8 +263,8 @@ wipe_EndScreen
 int
 wipe_ScreenWipe
 ( int	wipeno,
-  int	x,
-  int	y,
+  int	UNUSED(x),
+  int	UNUSED(y),
   int	width,
   int	height,
   int	ticks )
