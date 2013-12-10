@@ -1,6 +1,13 @@
-This project aims to create a bare-metal and portable version of DOOM.
+This project aims to create a bare-metal and portable version of **DOOM**.
 
-This is the original README message from John Cormack,
+TODO:
+
+- Remove X11 (see branch no-x11), and add hooks for rendering functions,
+- Remove warnings with modern compilers,
+- Add autotools and cross-compilation support,
+- Fix the FIXMEs
+
+This is the original _README_ message from John Cormack,
 
 > Here it is, at long last.  The DOOM source code is released for your
 non-profit use.  You still need real DOOM data to work with this code.
