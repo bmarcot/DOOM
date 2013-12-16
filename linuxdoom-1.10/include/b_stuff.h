@@ -1,9 +1,9 @@
 /**
- * Copyright (c) 2002-2011 Benoit Marcot
+ * Copyright (c) 2013-2014 Benoit Marcot
  *
- * This file is part of foobar.
+ * This file is part of u-DOOM.
  *
- * FOOBAR IS FREE SOFTWARE: YOU CAN REDISTRIBUTE IT AND/OR MODIFY
+ * U-DOOM IS FREE SOFTWARE: YOU CAN REDISTRIBUTE IT AND/OR MODIFY
  * IT UNDER THE TERMS OF THE GNU GENERAL PUBLIC LICENSE AS PUBLISHED BY
  * THE FREE SOFTWARE FOUNDATION, EITHER VERSION 3 OF THE LICENSE, OR
  * (AT YOUR OPTION) ANY LATER VERSION.
@@ -15,10 +15,16 @@
  *
  * YOU SHOULD HAVE RECEIVED A COPY OF THE GNU GENERAL PUBLIC LICENSE
  * ALONG WITH FOOBAR.  IF NOT, SEE <HTTP://WWW.GNU.ORG/LICENSES/>.
+ *
+ * -----------------------------------------------------------------------------
+ *
+ * This file contains stuff related to u-DOOM port, i.e. things not present in
+ * the legacy source code and used to build u-DOOM.
+ *
  */
 
-#ifndef B_UNUSED_H
-#define B_UNUSED_H
+#ifndef B_STUFF_H
+#define B_STUFF_H
 
 /*
  * this macro comes from 'ideasman42':
@@ -30,4 +36,4 @@
 #  define UNUSED(x) unsued_ ## x
 #endif
 
-#endif /* !B_UNUSED_H */
+#endif /* !B_STUFF_H */
