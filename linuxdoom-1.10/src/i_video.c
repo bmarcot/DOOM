@@ -35,6 +35,7 @@ rcsid[] = "$Id: i_x.c,v 1.6 1997/02/03 22:45:10 b1 Exp $";
 
 #include "doomdef.h"
 
+#include "b_stuff.h"
 
 //
 // I_ShutdownGraphics
@@ -122,7 +123,7 @@ void I_ReadScreen (byte* scr)
 //
 // I_SetPalette
 //
-void I_SetPalette (byte* palette)
+void I_SetPalette (byte* UNUSED(palette))
 {
     // FIXME:
 
