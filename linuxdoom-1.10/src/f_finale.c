@@ -4,6 +4,7 @@
 // $Id:$
 //
 // Copyright (C) 1993-1996 by id Software, Inc.
+// Copyright (C) 2013-2014 by Benoit Marcot
 //
 // This source is available for distribution and/or modification
 // only under the terms of the DOOM Source Code License as
@@ -41,11 +42,6 @@ rcsid[] = "$Id: f_finale.c,v 1.5 1997/02/03 21:26:34 b1 Exp $";
 
 #include "doomstat.h"
 #include "r_state.h"
-
-// ?
-//#include "doomstat.h"
-//#include "r_local.h"
-//#include "f_finale.h"
 
 // Stage of animation:
 //  0 = text, 1 = art screen, 2 = character cast
@@ -238,7 +234,7 @@ void F_Ticker (void)
     if ( gamemode == commercial)
 	return;
 
-    if (!finalestage && finalecount>strlen (finaletext)*TEXTSPEED + TEXTWAIT)
+    if (!finalestage && (finalecount > (int)(strlen(finaletext)*TEXTSPEED + TEXTWAIT)))
     {
 	finalecount = 0;
 	finalestage = 1;
@@ -734,5 +730,3 @@ void F_Drawer (void)
     }
 
 }
-
-
