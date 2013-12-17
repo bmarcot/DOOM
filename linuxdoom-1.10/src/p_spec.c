@@ -4,6 +4,7 @@
 // $Id:$
 //
 // Copyright (C) 1993-1996 by id Software, Inc.
+// Copyright (C) 2013-2014 by Benoit Marcot
 //
 // This source is available for distribution and/or modification
 // only under the terms of the DOOM Source Code License as
@@ -38,12 +39,9 @@ rcsid[] = "$Id: p_spec.c,v 1.6 1997/02/03 22:45:12 b1 Exp $";
 #include "m_argv.h"
 #include "m_random.h"
 #include "w_wad.h"
-
 #include "r_local.h"
 #include "p_local.h"
-
 #include "g_game.h"
-
 #include "s_sound.h"
 
 // State.
@@ -77,7 +75,6 @@ typedef struct
     char	startname[9];
     int		speed;
 } animdef_t;
-
 
 
 #define MAXANIMS                32
@@ -152,7 +149,7 @@ void P_InitPicAnims (void)
 
     //	Init animation
     lastanim = anims;
-    for (i=0 ; animdefs[i].istexture != -1 ; i++)
+    for (i=0 ; (int)animdefs[i].istexture != -1 ; i++)
     {
 	if (animdefs[i].istexture)
 	{

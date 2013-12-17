@@ -4,6 +4,7 @@
 // $Id:$
 //
 // Copyright (C) 1993-1996 by id Software, Inc.
+// Copyright (C) 2013-2014 by Benoit Marcot
 //
 // This source is available for distribution and/or modification
 // only under the terms of the DOOM Source Code License as
@@ -29,16 +30,12 @@ rcsid[] = "$Id: r_things.c,v 1.5 1997/02/03 16:47:56 b1 Exp $";
 #include <stdio.h>
 #include <stdlib.h>
 
-
 #include "doomdef.h"
 #include "m_swap.h"
-
 #include "i_system.h"
 #include "z_zone.h"
 #include "w_wad.h"
-
 #include "r_local.h"
-
 #include "doomstat.h"
 
 #include "b_stuff.h"
@@ -51,7 +48,6 @@ rcsid[] = "$Id: r_things.c,v 1.5 1997/02/03 16:47:56 b1 Exp $";
 //void R_DrawFuzzColumn (void);
 
 
-
 typedef struct
 {
     int		x1;
@@ -62,7 +58,6 @@ typedef struct
     int		bottomclip;
 
 } maskdraw_t;
-
 
 
 //
@@ -95,8 +90,6 @@ int		numsprites;
 spriteframe_t	sprtemp[29];
 int		maxframe;
 char*		spritename;
-
-
 
 
 //
@@ -156,8 +149,6 @@ R_InstallSpriteLump
     sprtemp[frame].lump[rotation] = lump - firstspritelump;
     sprtemp[frame].flip[rotation] = (byte)flipped;
 }
-
-
 
 
 //
@@ -282,15 +273,12 @@ void R_InitSpriteDefs (char** namelist)
 }
 
 
-
-
 //
 // GAME FUNCTIONS
 //
 vissprite_t	vissprites[MAXVISSPRITES];
 vissprite_t*	vissprite_p;
 int		newvissprite;
-
 
 
 //
@@ -308,7 +296,6 @@ void R_InitSprites (char** namelist)
 
     R_InitSpriteDefs (namelist);
 }
-
 
 
 //
@@ -334,7 +321,6 @@ vissprite_t* R_NewVisSprite (void)
     vissprite_p++;
     return vissprite_p-1;
 }
-
 
 
 //
@@ -389,7 +375,6 @@ void R_DrawMaskedColumn (column_t* column)
 }
 
 
-
 //
 // R_DrawVisSprite
 //  mfloorclip and mceilingclip should also be set.
@@ -442,7 +427,6 @@ R_DrawVisSprite
 
     colfunc = basecolfunc;
 }
-
 
 
 //
@@ -505,7 +489,7 @@ void R_ProjectSprite (mobj_t* thing)
 
     // decide which patch to use for sprite relative to player
 #ifdef RANGECHECK
-    if ((unsigned)thing->sprite >= numsprites)
+    if ((unsigned int)thing->sprite >= (unsigned int)numsprites)
 	I_Error ("R_ProjectSprite: invalid sprite number %i ",
 		 thing->sprite);
 #endif
@@ -605,8 +589,6 @@ void R_ProjectSprite (mobj_t* thing)
 }
 
 
-
-
 //
 // R_AddSprites
 // During BSP traversal, this adds sprites by sector.
@@ -658,7 +640,7 @@ void R_DrawPSprite (pspdef_t* psp)
 
     // decide which patch to use
 #ifdef RANGECHECK
-    if ( (unsigned)psp->state->sprite >= numsprites)
+    if ((unsigned int)psp->state->sprite >= (unsigned int)numsprites)
 	I_Error ("R_ProjectSprite: invalid sprite number %i ",
 		 psp->state->sprite);
 #endif
@@ -740,7 +722,6 @@ void R_DrawPSprite (pspdef_t* psp)
 }
 
 
-
 //
 // R_DrawPlayerSprites
 //
@@ -775,8 +756,6 @@ void R_DrawPlayerSprites (void)
 	    R_DrawPSprite (psp);
     }
 }
-
-
 
 
 //
@@ -834,7 +813,6 @@ void R_SortVisSprites (void)
 	vsprsortedhead.prev = best;
     }
 }
-
 
 
 //
@@ -949,8 +927,6 @@ void R_DrawSprite (vissprite_t* spr)
     mceilingclip = cliptop;
     R_DrawVisSprite (spr, spr->x1, spr->x2);
 }
-
-
 
 
 //

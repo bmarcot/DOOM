@@ -4,6 +4,7 @@
 // $Id:$
 //
 // Copyright (C) 1993-1996 by id Software, Inc.
+// Copyright (C) 2013-2014 by Benoit Marcot
 //
 // This source is available for distribution and/or modification
 // only under the terms of the DOOM Source Code License as
@@ -32,37 +33,26 @@ rcsid[] = "$Id: m_menu.c,v 1.7 1997/02/03 22:45:10 b1 Exp $";
 #include <stdlib.h>
 #include <ctype.h>
 
-
-#include "doomdef.h"
-#include "dstrings.h"
-
 #include "d_main.h"
-
 #include "i_system.h"
 #include "i_video.h"
 #include "z_zone.h"
 #include "v_video.h"
 #include "w_wad.h"
-
 #include "r_local.h"
-
-
 #include "hu_stuff.h"
-
 #include "g_game.h"
-
 #include "m_argv.h"
 #include "m_swap.h"
-
 #include "s_sound.h"
+#include "m_menu.h"
 
+#include "doomdef.h"
+#include "dstrings.h"
 #include "doomstat.h"
 
 // Data.
 #include "sounds.h"
-
-#include "m_menu.h"
-
 
 
 extern patch_t*		hu_font[HU_FONTSIZE];
@@ -1258,7 +1248,7 @@ int M_StringWidth(char* string)
     int             w = 0;
     int             c;
 
-    for (i = 0;i < strlen(string);i++)
+    for (i = 0; i < (int)strlen(string); i++)
     {
 	c = toupper(string[i]) - HU_FONTSTART;
 	if (c < 0 || c >= HU_FONTSIZE)
@@ -1282,7 +1272,7 @@ int M_StringHeight(char* string)
     int             height = SHORT(hu_font[0]->height);
 
     h = height;
-    for (i = 0;i < strlen(string);i++)
+    for (i = 0; i < (int)strlen(string); i++)
 	if (string[i] == '\n')
 	    h += height;
 
@@ -1756,7 +1746,7 @@ void M_Drawer (void)
 	y = 100 - M_StringHeight(messageString)/2;
 	while(*(messageString+start))
 	{
-	    for (i = 0;i < strlen(messageString+start);i++)
+	    for (i = 0; i < (int)strlen(messageString+start); i++)
 		if (*(messageString+start+i) == '\n')
 		{
 		    memset(string,0,40);
@@ -1765,7 +1755,7 @@ void M_Drawer (void)
 		    break;
 		}
 
-	    if (i == strlen(messageString+start))
+	    if (i == (int)strlen(messageString+start))
 	    {
 		strcpy(string,messageString+start);
 		start += i;
