@@ -4,6 +4,7 @@
 // $Id:$
 //
 // Copyright (C) 1993-1996 by id Software, Inc.
+// Copyright (C) 2013-2014 by Benoit Marcot
 //
 // This source is available for distribution and/or modification
 // only under the terms of the DOOM Source Code License as
@@ -30,12 +31,9 @@ rcsid[] = "$Id: p_enemy.c,v 1.5 1997/02/03 22:45:11 b1 Exp $";
 
 #include "m_random.h"
 #include "i_system.h"
-
 #include "doomdef.h"
 #include "p_local.h"
-
 #include "s_sound.h"
-
 #include "g_game.h"
 
 // State.
@@ -45,8 +43,7 @@ rcsid[] = "$Id: p_enemy.c,v 1.5 1997/02/03 22:45:11 b1 Exp $";
 // Data.
 #include "sounds.h"
 
-
-
+#include "b_stuff.h"
 
 typedef enum
 {
@@ -60,7 +57,6 @@ typedef enum
     DI_SOUTHEAST,
     DI_NODIR,
     NUMDIRS
-
 } dirtype_t;
 
 
@@ -77,9 +73,6 @@ dirtype_t diags[] =
 {
     DI_NORTHWEST, DI_NORTHEAST, DI_SOUTHWEST, DI_SOUTHEAST
 };
-
-
-
 
 
 void A_Fall (mobj_t *actor);
@@ -400,7 +393,7 @@ void P_NewChaseDir (mobj_t*	actor)
 	&& d[2] != DI_NODIR)
     {
 	actor->movedir = diags[((deltay<0)<<1)+(deltax>0)];
-	if (actor->movedir != turnaround && P_TryWalk(actor))
+	if (actor->movedir != (int)turnaround && P_TryWalk(actor))
 	    return;
     }
 
@@ -430,7 +423,7 @@ void P_NewChaseDir (mobj_t*	actor)
 
     if (d[2]!=DI_NODIR)
     {
-	actor->movedir =d[2];
+	actor->movedir = d[2];
 
 	if (P_TryWalk(actor))
 	    return;
@@ -440,7 +433,7 @@ void P_NewChaseDir (mobj_t*	actor)
     // so pick another direction.
     if (olddir!=DI_NODIR)
     {
-	actor->movedir =olddir;
+	actor->movedir = olddir;
 
 	if (P_TryWalk(actor))
 	    return;
@@ -453,7 +446,7 @@ void P_NewChaseDir (mobj_t*	actor)
 	      tdir<=DI_SOUTHEAST;
 	      tdir++ )
 	{
-	    if (tdir!=turnaround)
+	    if (tdir != (int)turnaround)
 	    {
 		actor->movedir =tdir;
 
@@ -468,7 +461,7 @@ void P_NewChaseDir (mobj_t*	actor)
 	      tdir != (DI_EAST-1);
 	      tdir-- )
 	{
-	    if (tdir!=turnaround)
+	    if (tdir != (int)turnaround)
 	    {
 		actor->movedir =tdir;
 
@@ -480,7 +473,7 @@ void P_NewChaseDir (mobj_t*	actor)
 
     if (turnaround !=  DI_NODIR)
     {
-	actor->movedir =turnaround;
+	actor->movedir = turnaround;
 	if ( P_TryWalk(actor) )
 	    return;
     }
@@ -1777,7 +1770,7 @@ void A_BabyMetal (mobj_t* mo)
 void
 A_OpenShotgun2
 ( player_t*	player,
-  pspdef_t*	psp )
+  pspdef_t*	UNUSED(psp) )
 {
     S_StartSound (player->mo, sfx_dbopn);
 }
@@ -1785,7 +1778,7 @@ A_OpenShotgun2
 void
 A_LoadShotgun2
 ( player_t*	player,
-  pspdef_t*	psp )
+  pspdef_t*	UNUSED(psp) )
 {
     S_StartSound (player->mo, sfx_dbload);
 }
@@ -1810,7 +1803,7 @@ mobj_t*		braintargets[32];
 int		numbraintargets;
 int		braintargeton;
 
-void A_BrainAwake (mobj_t* mo)
+void A_BrainAwake (mobj_t* UNUSED(mo))
 {
     thinker_t*	thinker;
     mobj_t*	m;
@@ -1840,7 +1833,7 @@ void A_BrainAwake (mobj_t* mo)
 }
 
 
-void A_BrainPain (mobj_t*	mo)
+void A_BrainPain (mobj_t*	UNUSED(mo))
 {
     S_StartSound (NULL,sfx_bospn);
 }
@@ -1893,7 +1886,7 @@ void A_BrainExplode (mobj_t* mo)
 }
 
 
-void A_BrainDie (mobj_t*	mo)
+void A_BrainDie (mobj_t*	UNUSED(mo))
 {
     G_ExitLevel ();
 }

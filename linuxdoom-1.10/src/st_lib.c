@@ -4,6 +4,7 @@
 // $Id:$
 //
 // Copyright (C) 1993-1996 by id Software, Inc.
+// Copyright (C) 2013-2014 by Benoit Marcot
 //
 // This source is available for distribution and/or modification
 // only under the terms of the DOOM Source Code License as
@@ -28,16 +29,11 @@ rcsid[] = "$Id: st_lib.c,v 1.4 1997/02/03 16:47:56 b1 Exp $";
 #include <ctype.h>
 
 #include "doomdef.h"
-
 #include "z_zone.h"
 #include "v_video.h"
-
 #include "m_swap.h"
-
 #include "i_system.h"
-
 #include "w_wad.h"
-
 #include "st_stuff.h"
 #include "st_lib.h"
 #include "r_local.h"
@@ -46,8 +42,6 @@ rcsid[] = "$Id: st_lib.c,v 1.4 1997/02/03 16:47:56 b1 Exp $";
 
 // in AM_map.c
 extern boolean		automapactive;
-
-
 
 
 //
@@ -159,7 +153,6 @@ STlib_updateNum
 }
 
 
-//
 void
 STlib_initPercent
 ( st_percent_t*		p,
@@ -175,8 +168,6 @@ STlib_initPercent
 }
 
 
-
-
 void
 STlib_updatePercent
 ( st_percent_t*		per,
@@ -187,7 +178,6 @@ STlib_updatePercent
 
     STlib_updateNum(&per->n, refresh);
 }
-
 
 
 void
@@ -206,7 +196,6 @@ STlib_initMultIcon
     i->on	= on;
     i->p	= il;
 }
-
 
 
 void
@@ -241,7 +230,6 @@ STlib_updateMultIcon
 }
 
 
-
 void
 STlib_initBinIcon
 ( st_binicon_t*		b,
@@ -260,7 +248,6 @@ STlib_initBinIcon
 }
 
 
-
 void
 STlib_updateBinIcon
 ( st_binicon_t*		bi,
@@ -272,7 +259,7 @@ STlib_updateBinIcon
     int			h;
 
     if (*bi->on
-	&& (bi->oldval != *bi->val || refresh))
+	&& ((bi->oldval != (int)*bi->val) || refresh))
     {
 	x = bi->x - SHORT(bi->p->leftoffset);
 	y = bi->y - SHORT(bi->p->topoffset);
@@ -289,5 +276,4 @@ STlib_updateBinIcon
 
 	bi->oldval = *bi->val;
     }
-
 }
