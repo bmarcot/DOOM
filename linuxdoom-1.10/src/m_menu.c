@@ -222,8 +222,6 @@ void M_StopMessage(void);
 void M_ClearMenus (void);
 
 
-
-
 //
 // DOOM MENU
 //
@@ -582,7 +580,7 @@ void M_LoadSelect(int choice)
 //
 // Selected from DOOM menu
 //
-void M_LoadGame (int choice __attribute__((__unused__)))
+void M_LoadGame (int UNUSED(choice))
 {
     if (netgame)
     {
@@ -647,7 +645,7 @@ void M_SaveSelect(int choice)
 //
 // Selected from DOOM menu
 //
-void M_SaveGame (int choice __attribute__((__unused__)))
+void M_SaveGame (int UNUSED(choice))
 {
     if (!usergame)
     {
@@ -861,7 +859,7 @@ void M_DrawNewGame(void)
     V_DrawPatchDirect (54,38,0,W_CacheLumpName("M_SKILL",PU_CACHE));
 }
 
-void M_NewGame(int choice __attribute__((__unused__)))
+void M_NewGame(int UNUSED(choice))
 {
     if (netgame && !demoplayback)
     {
@@ -956,20 +954,18 @@ void M_DrawOptions(void)
 		 9,screenSize);
 }
 
-void M_Options(int choice __attribute__((__unused__)))
+void M_Options(int UNUSED(choice))
 {
     M_SetupNextMenu(&OptionsDef);
 }
 
 
-
 //
 //      Toggle messages on/off
 //
-void M_ChangeMessages(int choice)
+void M_ChangeMessages(int UNUSED(choice))
 {
     // warning: unused parameter `int choice'
-    choice = 0;
     showMessages = 1 - showMessages;
 
     if (!showMessages)
@@ -994,49 +990,41 @@ void M_EndGameResponse(int ch)
     D_StartTitle ();
 }
 
-void M_EndGame(int choice)
+void M_EndGame(int UNUSED(choice))
 {
-    choice = 0;
     if (!usergame)
     {
-	S_StartSound(NULL,sfx_oof);
+	S_StartSound(NULL, sfx_oof);
 	return;
     }
 
     if (netgame)
     {
-	M_StartMessage(NETEND,NULL,false);
+	M_StartMessage(NETEND, NULL, false);
 	return;
     }
 
-    M_StartMessage(ENDGAME,M_EndGameResponse,true);
+    M_StartMessage(ENDGAME, M_EndGameResponse, true);
 }
-
-
 
 
 //
 // M_ReadThis
 //
-void M_ReadThis(int choice)
+void M_ReadThis(int UNUSED(choice))
 {
-    choice = 0;
     M_SetupNextMenu(&ReadDef1);
 }
 
-void M_ReadThis2(int choice)
+void M_ReadThis2(int UNUSED(choice))
 {
-    choice = 0;
     M_SetupNextMenu(&ReadDef2);
 }
 
-void M_FinishReadThis(int choice)
+void M_FinishReadThis(int UNUSED(choice))
 {
-    choice = 0;
     M_SetupNextMenu(&MainDef);
 }
-
-
 
 
 //
@@ -1086,7 +1074,7 @@ void M_QuitResponse(int ch)
 
 
 
-void M_QuitDOOM(int choice __attribute__((__unused__)))
+void M_QuitDOOM(int UNUSED(choice))
 {
   // We pick index 0 which is language sensitive,
   //  or one at random, between 1 and maximum number.
@@ -1117,11 +1105,8 @@ void M_ChangeSensitivity(int choice)
 }
 
 
-
-
-void M_ChangeDetail(int choice)
+void M_ChangeDetail(int UNUSED(choice))
 {
-    choice = 0;
     detailLevel = 1 - detailLevel;
 
     // FIXME - does not work. Remove anyway?
@@ -1136,8 +1121,6 @@ void M_ChangeDetail(int choice)
     else
 	players[consoleplayer].message = DETAILLO;*/
 }
-
-
 
 
 void M_SizeDisplay(int choice)
