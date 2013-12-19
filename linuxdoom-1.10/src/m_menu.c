@@ -54,6 +54,7 @@ rcsid[] = "$Id: m_menu.c,v 1.7 1997/02/03 22:45:10 b1 Exp $";
 // Data.
 #include "sounds.h"
 
+#include "b_stuff.h"
 
 extern patch_t*		hu_font[HU_FONTSIZE];
 extern boolean		message_dontfuckwithme;
@@ -798,7 +799,7 @@ void M_DrawSound(void)
 		 16,snd_MusicVolume);
 }
 
-void M_Sound(int choice __attribute__((__unused__)))
+void M_Sound(int UNUSED(choice))
 {
     M_SetupNextMenu(&SoundDef);
 }
